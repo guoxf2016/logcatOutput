@@ -22,9 +22,9 @@ public class App extends Application implements Thread.UncaughtExceptionHandler 
         File logFile = new File(this.getExternalCacheDir(),
                 DateFormat.format("yyyy-MM-dd-HH-mm-ss", System.currentTimeMillis()) + ".log");
         try {
-            Runtime.getRuntime().exec("logcat -f " + logFile.getAbsolutePath());
-            System.exit(1);
-        } catch (IOException e1) {
+            Process process = Runtime.getRuntime().exec("logcat -d -f " + logFile.getAbsolutePath());
+            process.waitFor();
+        } catch (IOException | InterruptedException e1) {
             e1.printStackTrace();
         }
     }
